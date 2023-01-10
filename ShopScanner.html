@@ -10,16 +10,31 @@
     </head>
     <body>
         <div id="reader" width="600px"></div>
-        <div id="PointsRemain">
-            
-        </div>
+
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+        <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+
+        <pre id="content" style="white-space: pre-wrap;"></pre>
+
+        <input type="number" name="StudentID" id="StudentID" value="">
+        <button id="GetUserData">Get Data</button>
     </body>
+
+    <script src="ShopScanner.js"></script>
+    
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 
     <script>
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
-            
+            if ($("#StudentID").val() == decodedText){
+                return;
+            }
+            $("#StudentID").val(decodedText)
+            GetData(decodedText)
         }
 
         function onScanFailure(error) {
