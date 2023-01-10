@@ -13,10 +13,15 @@
     </body>
 
     <script>
+        let code;
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
-            window.location.replace("https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/viewform?usp=pp_url&entry.1337812519=0&entry.439262867="+decodedText);
+            if (code == decodedText){
+                return;
+            }
+            code = decodedText;
+            window.open("https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/viewform?usp=pp_url&entry.1337812519=0&entry.439262867="+decodedText, '_blank');
         }
 
         function onScanFailure(error) {

@@ -55,6 +55,7 @@ function gisLoaded() {
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
         document.getElementById('authorize_button').style.visibility = 'visible';
+        handleAuthClick();
     }
 }
 
