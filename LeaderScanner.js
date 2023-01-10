@@ -15,6 +15,7 @@ let gisInited = false;
 
 document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
+document.getElementById('GoToGForm').style.visibility = 'hidden';
 
 /**
  * Callback after api.js is loaded.
@@ -55,7 +56,6 @@ function gisLoaded() {
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
         document.getElementById('authorize_button').style.visibility = 'visible';
-        handleAuthClick();
     }
 }
 
@@ -96,6 +96,7 @@ function handleSignoutClick() {
         document.getElementById('content').innerText = '';
         document.getElementById('authorize_button').style.visibility = 'visible';
         document.getElementById('signout_button').style.visibility = 'hidden';
+        document.getElementById('GoToGForm').style.visibility = 'hidden';
     }
 }
 
@@ -145,7 +146,3 @@ async function GetData(StudentID) {
         }
     }
 }
-
-$("#GetUserData").click(() => {
-    GetData($("#StudentID").val())
-})
