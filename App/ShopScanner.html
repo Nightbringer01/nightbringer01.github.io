@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Corona Admin</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+        <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css.map">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
+        <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
+        <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
+        <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">  
+        <link rel="stylesheet" href="style/modal.css">
+        <!-- End plugin css for this page -->
+        <link rel="stylesheet" href="style/ShopScanner.css">
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="assets/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="assets/images/favicon.png" />
+        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="modal.js"></script>
+      </head>
+
+        
+        <div class="main">
+            <div class = "wrapper">
+                
+                <img src="assets/images/Logowithtext.png">
+                <div class="header-text" id="title-text">Ignite Coins Balance</div>
+                <div class="header-text" id="desc">Scanning will start automatically</div>
+                <div id="reader" ></div>
+
+                
+            </div>
+        </div>
+        
+        
+    </body>
+
+    <script src="ShopScanner.js"></script>
+    
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+    <script> 
+        function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like, for example:
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+            if ($("#StudentID").val() == decodedText){
+                return;
+            }
+            $("#StudentID").val(decodedText)
+            GetData(decodedText)
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // for example:
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        // let html5QrcodeScanner = new Html5QrcodeScanner(
+        // "reader",
+        // { fps: 10, qrbox: {width: 250, height: 200} },
+        // /* verbose= */ false);
+        // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+        Html5Qrcode.getCameras()
+                .then((devices) => {
+                    if (devices && devices.length) {
+                        var cameraId = devices[0].id;
+                        const html5QrCode = new Html5Qrcode("reader");
+                        html5QrCode
+                            .start(
+                                cameraId,
+                                {
+                                    fps: 10, // Optional, frame per seconds for qr code scanning
+                                    qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
+                                },
+                                (decodedText, decodedResult) => {
+                                    // do something when code is read
+                                    onScanSuccess(decodedText, decodedResult);
+                                },
+                                (errorMessage) => {
+                                    // parse error, ignore it.
+                                }
+                            )
+                            .catch((err) => {
+                                // Start failed, handle it.
+                            });
+                    }
+                })
+                .catch((err) => {
+                    // handle err
+                });
+    </script>       
+</html>

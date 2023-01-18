@@ -1,0 +1,47 @@
+html, body{
+    height: 100%;
+}
+
+.header-text{
+    text-align: center;
+    color: black;
+}
+
+#title-text{
+    font-weight: bolder;
+}
+
+#desc{
+    font-size: medium;
+    margin-bottom: 20px;
+}
+
+
+img{
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    width: 200px;
+    height: 125px;
+}
+
+#navigation-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    height: 75%;
+    width: 100%;
+    display: table;
+}
+.wrapper {
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+    background-color: white;
+}
