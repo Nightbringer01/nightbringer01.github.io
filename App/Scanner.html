@@ -97,6 +97,7 @@
 
                     <div class="row">
                       <button type="button" class="btn btn-outline-danger btn-block m-2" id="clear">Clear</button>
+                      <button type="button" class="btn btn-outline-primary btn-block m-2" id="next">Next</button>
                     </div>
                   </div>
                 </div>
@@ -145,8 +146,21 @@
 
   </div>
 
+
+
+  <div class="PasswordScreen content-wrapper row align-items-center justify-content-center" id="PasswordScreen">
+    
+    <div class="card col-md-2 mb-5">
+      <div class="card-body">
+        <h3>Enter Password</h3>
+        <input type="password" class="form-control m-1 mr-5" id="PasswordInput" placeholder="Password">
+        <button type="submit" class="btn btn-primary m-1" id="PasswordSubmit">Submit</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  <script src="index.js"></script>
+  <script src="Scanner.js"></script>
 </body>
 
 </html>
