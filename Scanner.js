@@ -1,8 +1,9 @@
-
 const StudentIDLinkURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmd5jBGrtYuCC1wOHTQL8xgYTPvvN7P4p9mtLdL8b2OSRmha8k7f7uzP5lwbqlms-C-sOWX7FiKeqi/pub?gid=1662341462&single=true&output=csv';
 const PointsTallyURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmd5jBGrtYuCC1wOHTQL8xgYTPvvN7P4p9mtLdL8b2OSRmha8k7f7uzP5lwbqlms-C-sOWX7FiKeqi/pub?gid=1490874261&single=true&output=csv';
 
 let enableScanning = true;
+let currentCameraFacingMode = "environment";
+const html5QrCode = new Html5Qrcode("reader");
 
 async function GetData(StudentID) {
     let PointsResponse, StudentDataResponse;
@@ -75,72 +76,76 @@ let studentID;
 
 $("#DataLoadingElement").hide();
 
-function StartCam(){
+function StartCam() {
+
 
     Html5Qrcode.getCameras()
-    .then((devices) => {
-        if (devices && devices.length) {
-            const html5QrCode = new Html5Qrcode("reader");
-            html5QrCode
-                .start({
-                        facingMode: "environment"
-                    }, {
-                        fps: 10, // Optional, frame per seconds for qr code scanning
-                        qrbox: {
-                            width: width / 2,
-                            height: width / 2
-                        }, // Optional, if you want bounded box UI
-                    },
-                    async (decodedText, decodedResult) => {
-                        // do something when code is read
-                        if (!enableScanning) return;
-                        enableScanning = false;
-                        window.scrollTo(0, document.body.scrollHeight);
-                        $("#StudentID").text(decodedText);
-                        $("#DataLoadingElement").show();
-                        let data = await GetData(decodedText)
-                        if (data == null){
-                            $("#StudentName").text("Not Found")
-                            $("#GradeLevel").text("Not Found")
-                            $("#Points").text("Points: NA")
-                        }
-                        else{
-                            studentID = decodedText;
-                            $("#StudentName").text(data.Name)
-                            $("#GradeLevel").text(data.GradeLevel)
-                            $("#Points").text("Points: "+data.Points)
-                        }
-                        $("#DataLoadingElement").hide();
-                        enableScanning = true;
-                    },
-                    (errorMessage) => {
-                        // parse error, ignore it.
-                    }
-                )
-                .catch((err) => {
-                    // Start failed, handle it.
-                });
-        }
-    })
-    .catch((err) => {
-        // handle err
-    });
+        .then((devices) => {
+            if (devices && devices.length) {
+                html5QrCode
+                    .start({
+                            facingMode: currentCameraFacingMode
+                        }, {
+                            fps: 10, // Optional, frame per seconds for qr code scanning
+                            qrbox: {
+                                width: width / 2,
+                                height: width / 2
+                            }, // Optional, if you want bounded box UI
+                        },
+                        async (decodedText, decodedResult) => {
+                                // do something when code is read
+                                if (!enableScanning) return;
+                                enableScanning = false;
+                                window.scrollTo(0, document.body.scrollHeight);
+                                $("#StudentID").text(decodedText);
+                                $("#DataLoadingElement").show();
+                                let data = await GetData(decodedText)
+                                if (data == null) {
+                                    $("#StudentName").text("Not Found")
+                                    $("#GradeLevel").text("Not Found")
+                                    $("#Points").text("Points: NA")
+                                } else {
+                                    studentID = decodedText;
+                                    $("#StudentName").text(data.Name)
+                                    $("#GradeLevel").text(data.GradeLevel)
+                                    $("#Points").text("Points: " + ((data.Points) ? data.Points : "0"))
+                                }
+                                $("#DataLoadingElement").hide();
+                                enableScanning = true;
+                            },
+                            (errorMessage) => {
+                                // parse error, ignore it.
+                            }
+                    )
+                    .catch((err) => {
+                        // Start failed, handle it.
+                    });
+            }
+        })
+        .catch((err) => {
+            // handle err
+        });
 }
 
-$("#clear").click(() =>{
+$("#clear").click(() => {
+    clearData();
+})
+
+function clearData(){
+    studentID = null;
     window.scrollTo(0, 0);
     $("#StudentID").text("Student ID");
     $("#StudentName").text("Student Name")
     $("#GradeLevel").text("Grade Level")
     $("#Points").text("Points: ")
+}
+
+
+$("#next").click(() => {
+    window.open("https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/viewform?usp=pp_url&entry.1337812519=0&entry.439262867=" + studentID, '_blank');
 })
 
-
-$("#next").click(() =>{
-    window.open("https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/viewform?usp=pp_url&entry.1337812519=0&entry.439262867="+studentID, '_blank');
-})
-
-$("#PasswordSubmit").click(()=>{
+function SubmitPassword() {
 
     let today = new Date();
 
@@ -152,4 +157,47 @@ $("#PasswordSubmit").click(()=>{
         $("#PasswordInput").val("")
     }
 
-})
+}
+
+$("#ChangeCamera").click(() => {    
+
+    currentCameraFacingMode = currentCameraFacingMode == "environment" ? "user" : "environment";
+
+    html5QrCode.stop().then((ignore) => {
+        StartCam()
+    }).catch((err) => {
+        // Stop failed, handle it.
+    });
+});
+
+function RecordAttendance(Session) {
+    if(!studentID) return;
+
+    let Option;
+
+    switch (Session) {
+        case "8AM":
+            Option = "8:30am+Service";
+            break;
+        case "11AM":
+            Option = "11:00am+Service";
+            break;
+        case "YouthHub":
+            Option = "Youth+Hub";
+            break;
+        case "Saturday":
+            Option = "Saturday+Fellowship";
+            break;
+    }
+
+    const url='https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867='+studentID+'&entry.1776706079='+Option+'&entry.1337812519=0&submit=Submit';
+
+    $("#iframeForm").attr("src",url);
+
+    $("#Points").text("Attendance recorded")
+
+    setTimeout(() => {
+        clearData();
+    }, 2000);
+
+}
