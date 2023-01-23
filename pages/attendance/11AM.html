@@ -30,20 +30,9 @@
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="index.html"><img class='h-100 w-auto' src="../../
-        <div class=" row pl-2">
-          <div class="col-3">
-            <button type="submit" class="btn btn-primary m-1" id="PasswordSubmit">Submit</button>
-          </div>
-          <div class="col-7 ml-auto">
-            <a class="nav-link" href="/">
-              <span class="menu-title">I am a student</span>
-            </a>
-          </div>"
-          alt="logo" />
-        </a>
-        <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="../../assets/images/Logo.png"
-            alt="logo" /></a>
+        <a class="sidebar-brand brand-logo" href="index.html"><img class='h-100 w-auto' src="../../assets/images/Logowithtext.png"
+            alt="logo" class="w-auto h-100"/></a>
+        <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="../../assets/images/Logo.png" alt="logo"  class="w-auto h-100"/></a>
       </div>
       <ul class="nav">
         <li class="nav-item menu-items">
@@ -211,13 +200,15 @@
   </div>
 
   <div class="PasswordScreen content-wrapper row align-items-center justify-content-center" id="PasswordScreen">
-    <div class="card col-md-2 mb-5">
+
+    <div class="card col-md-3 mb-5">
       <div class="card-body">
         <h3>Enter Password</h3>
         <input type="password" class="form-control m-1 mr-5" id="PasswordInput" placeholder="Password">
         <div class="row pl-2">
           <div class="col-3">
-            <button type="submit" class="btn btn-primary m-1" id="PasswordSubmit" onclick="SubmitPassword()">Submit</button>
+            <button type="submit" class="btn btn-primary m-1" id="PasswordSubmit"
+              onclick="SubmitPassword()">Submit</button>
           </div>
           <div class="col-9 ml-auto d-flex">
             <a class="nav-link ml-auto" href="/">
@@ -227,6 +218,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="/Scanner.js"></script>
