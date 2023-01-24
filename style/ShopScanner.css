@@ -1,23 +1,23 @@
-html, body{
+html,
+body {
     height: 100%;
 }
 
-.header-text{
+.header-text {
     text-align: center;
     color: black;
 }
 
-#title-text{
+#title-text {
     font-weight: bolder;
 }
 
-#desc{
+#desc {
     font-size: medium;
     margin-bottom: 20px;
 }
 
-
-img{
+img {
     position: relative;
     display: block;
     margin-left: auto;
@@ -39,6 +39,7 @@ img{
     width: 100%;
     display: table;
 }
+
 .wrapper {
     display: table-cell;
     height: 100%;

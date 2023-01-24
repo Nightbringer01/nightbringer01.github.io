@@ -1,44 +1,46 @@
 .loader {
-  border: 16px solid #f3f3f3;
-  /* Light grey */
-  border-top: 16px solid #3498db;
-  /* Blue */
-  border-radius: 50%;
-  width: 15vw;
-  height: 15vw;
-  animation: spin 2s linear infinite;
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 15vw;
+    height: 15vw;
+    animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.centered-loader{
-
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding-right: 25px;
-  
+.centered-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-right: 25px;
 }
 
-
-.grey-background{
-  background-color: rgba(70, 70, 70, 0.75);
+.grey-background {
+    background-color: rgba(70, 70, 70, 0.75);
 }
 
-.PasswordScreen{
-  background-color: rgba(70, 70, 70, 0.75);
-  position: absolute;
-  left: 10px;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2000;
+.PasswordScreen {
+    background-color: rgba(70, 70, 70, 0.75);
+    position: absolute;
+    left: 10px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+@media screen and (max-width: 992px) {
+    .menu-slider {
+        justify-content: flex-end;
+    }
 }
