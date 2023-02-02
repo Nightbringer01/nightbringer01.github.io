@@ -170,12 +170,12 @@ $("#ChangeCamera").click(() => {
     });
 });
 
-function RecordAttendance(Session) {
+function RecordAttendance() {
     if(!studentID) return;
 
     let Option;
 
-    switch (Session) {
+    switch (SelectedSession) {
         case "8AM":
             Option = "8:30am+Service";
             break;
@@ -195,9 +195,54 @@ function RecordAttendance(Session) {
     $("#iframeForm").attr("src",url);
 
     $("#Points").text("Attendance recorded")
+    $("#iframeForm").show();
 
     setTimeout(() => {
         clearData();
-    }, 2000);
+        $("#iframeForm").hide();
+    }, 4000);
+}
+
+function AddPoints(){
+
+    if(!studentID) return;
+
+    let Option;
+    let PointsToAdd= $('#AddPointsInput').val();
+    console.log(PointsToAdd)
+    if (isNaN(PointsToAdd)) 
+    {
+        alert("Must input numbers");
+        return false;
+    }
+
+    PointsToAdd = +PointsToAdd;
+
+    switch (SelectedSession) {
+        case "8AM":
+            Option = "8:30am+Service";
+            break;
+        case "11AM":
+            Option = "11:00am+Service";
+            break;
+        case "YouthHub":
+            Option = "Youth+Hub";
+            break;
+        case "Saturday":
+            Option = "Saturday+Fellowship";
+            break;
+    }
+
+    const url='https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867='+studentID+'&entry.1776706079='+Option+'&entry.1337812519='+PointsToAdd+'&submit=Submit';
+
+    $("#iframeForm").attr("src",url);
+
+    $("#Points").text("Points Added")
+    $("#iframeForm").show();
+
+    setTimeout(() => {
+        clearData();
+        $("#iframeForm").hide();
+    }, 4000);
 
 }
