@@ -103,12 +103,12 @@ function StartCam() {
                                 if (data == null) {
                                     $("#StudentName").text("Not Found")
                                     $("#GradeLevel").text("Not Found")
-                                    $("#Points").text("Points: NA")
+                                    $("#Points").text("Credits: NA")
                                 } else {
                                     studentID = decodedText;
                                     $("#StudentName").text(data.Name)
                                     $("#GradeLevel").text(data.GradeLevel)
-                                    $("#Points").text("Points: " + ((data.Points) ? data.Points : "0"))
+                                    $("#Points").text("Credits: " + ((data.Points) ? data.Points : "0"))
                                 }
                                 $("#DataLoadingElement").hide();
                                 enableScanning = true;
@@ -137,7 +137,7 @@ function clearData(){
     $("#StudentID").text("Student ID");
     $("#StudentName").text("Student Name")
     $("#GradeLevel").text("Grade Level")
-    $("#Points").text("Points: ")
+    $("#Points").text("Credits: ")
 }
 
 
