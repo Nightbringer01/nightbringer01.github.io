@@ -23,10 +23,10 @@ async function GetData(StudentID) {
         return;
     }
 
-    let StudentDataResponseArray = StudentDataResponse.split("\r\n").map(function (line) {
+    let StudentDataResponseArray = StudentDataResponse.split("\r\n").map(function(line) {
         return line.split(",");
     });
-    let PointsResponseArray = PointsResponse.split("\r\n").map(function (line) {
+    let PointsResponseArray = PointsResponse.split("\r\n").map(function(line) {
         return line.split(",");
     });
 
@@ -92,30 +92,30 @@ function StartCam() {
                                 height: width / 2
                             }, // Optional, if you want bounded box UI
                         },
-                        async (decodedText, decodedResult) => {
-                                // do something when code is read
-                                if (!enableScanning) return;
-                                enableScanning = false;
-                                window.scrollTo(0, document.body.scrollHeight);
-                                $("#StudentID").text(decodedText);
-                                $("#DataLoadingElement").show();
-                                let data = await GetData(decodedText)
-                                if (data == null) {
-                                    $("#StudentName").text("Not Found")
-                                    $("#GradeLevel").text("Not Found")
-                                    $("#Points").text("Credits: NA")
-                                } else {
-                                    studentID = decodedText;
-                                    $("#StudentName").text(data.Name)
-                                    $("#GradeLevel").text(data.GradeLevel)
-                                    $("#Points").text("Credits: " + ((data.Points) ? data.Points : "0"))
-                                }
-                                $("#DataLoadingElement").hide();
-                                enableScanning = true;
-                            },
-                            (errorMessage) => {
-                                // parse error, ignore it.
+                        async(decodedText, decodedResult) => {
+                            // do something when code is read
+                            if (!enableScanning) return;
+                            enableScanning = false;
+                            window.scrollTo(0, document.body.scrollHeight);
+                            $("#StudentID").text(decodedText);
+                            $("#DataLoadingElement").show();
+                            let data = await GetData(decodedText)
+                            if (data == null) {
+                                $("#StudentName").text("Not Found")
+                                $("#GradeLevel").text("Not Found")
+                                $("#Points").text("Credits: NA")
+                            } else {
+                                studentID = decodedText;
+                                $("#StudentName").text(data.Name)
+                                $("#GradeLevel").text(data.GradeLevel)
+                                $("#Points").text("Credits: " + ((data.Points) ? data.Points : "0"))
                             }
+                            $("#DataLoadingElement").hide();
+                            enableScanning = true;
+                        },
+                        (errorMessage) => {
+                            // parse error, ignore it.
+                        }
                     )
                     .catch((err) => {
                         // Start failed, handle it.
@@ -131,7 +131,7 @@ $("#clear").click(() => {
     clearData();
 })
 
-function clearData(){
+function clearData() {
     studentID = null;
     window.scrollTo(0, 0);
     $("#StudentID").text("Student ID");
@@ -149,17 +149,16 @@ function SubmitPassword() {
 
     let today = new Date();
 
-    if ($("#PasswordInput").val() == today.getDate()){
+    if ($("#PasswordInput").val() == today.getDate()) {
         $("#PasswordScreen").hide();
         StartCam();
-    }
-    else{
+    } else {
         $("#PasswordInput").val("")
     }
 
 }
 
-$("#ChangeCamera").click(() => {    
+$("#ChangeCamera").click(() => {
 
     currentCameraFacingMode = currentCameraFacingMode == "environment" ? "user" : "environment";
 
@@ -171,7 +170,7 @@ $("#ChangeCamera").click(() => {
 });
 
 function RecordAttendance() {
-    if(!studentID) return;
+    if (!studentID) return;
 
     let Option;
 
@@ -189,10 +188,10 @@ function RecordAttendance() {
             Option = "Saturday+Fellowship";
             break;
     }
+    DeviceDetails = Navigator.userAgent;
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867=' + studentID + '&entry.1776706079=' + Option + '&entry.1337812519=0&entry.1932003177=' + DeviceDetails + '&submit=Submit';
 
-    const url='https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867='+studentID+'&entry.1776706079='+Option+'&entry.1337812519=0&submit=Submit';
-
-    $("#iframeForm").attr("src",url);
+    $("#iframeForm").attr("src", url);
 
     $("#Points").text("Attendance recorded")
     $("#iframeForm").show();
@@ -203,15 +202,14 @@ function RecordAttendance() {
     }, 4000);
 }
 
-function AddPoints(){
+function AddPoints() {
 
-    if(!studentID) return;
+    if (!studentID) return;
 
     let Option;
-    let PointsToAdd= $('#AddPointsInput').val();
+    let PointsToAdd = $('#AddPointsInput').val();
     console.log(PointsToAdd)
-    if (isNaN(PointsToAdd)) 
-    {
+    if (isNaN(PointsToAdd)) {
         alert("Must input numbers");
         return false;
     }
@@ -233,9 +231,9 @@ function AddPoints(){
             break;
     }
 
-    const url='https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867='+studentID+'&entry.1776706079='+Option+'&entry.1337812519='+PointsToAdd+'&submit=Submit';
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867=' + studentID + '&entry.1776706079=' + Option + '&entry.1337812519=' + PointsToAdd + '&submit=Submit';
 
-    $("#iframeForm").attr("src",url);
+    $("#iframeForm").attr("src", url);
 
     $("#Points").text("Points Added")
     $("#iframeForm").show();
