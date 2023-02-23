@@ -4,6 +4,7 @@ const PointsTallyURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmd5jBG
 let enableScanning = true;
 let currentCameraFacingMode = "environment";
 const html5QrCode = new Html5Qrcode("reader");
+let pointsAdded = false;
 
 async function GetData(StudentID) {
     let PointsResponse, StudentDataResponse;
@@ -138,6 +139,7 @@ function clearData() {
     $("#StudentName").text("Student Name")
     $("#GradeLevel").text("Grade Level")
     $("#Points").text("Credits: ")
+    pointsAdded = false;
 }
 
 
@@ -170,7 +172,8 @@ $("#ChangeCamera").click(() => {
 });
 
 function RecordAttendance() {
-    if (!studentID) return;
+    console.log();
+    if (!studentID || pointsAdded) return;
 
     let Option;
 
@@ -188,7 +191,8 @@ function RecordAttendance() {
             Option = "Saturday+Fellowship";
             break;
     }
-    DeviceDetails = Navigator.userAgent;
+
+    let DeviceDetails = window.navigator.userAgent;
     const url = 'https://docs.google.com/forms/d/e/1FAIpQLSfTOZ4zApoVthqg5Edd1eDg2w4eEnEh_snqw16yQt6fM48F-w/formResponse?usp=pp_url&entry.439262867=' + studentID + '&entry.1776706079=' + Option + '&entry.1337812519=0&entry.1932003177=' + DeviceDetails + '&submit=Submit';
 
     $("#iframeForm").attr("src", url);
@@ -200,11 +204,12 @@ function RecordAttendance() {
         clearData();
         $("#iframeForm").hide();
     }, 4000);
+    pointsAdded = true;
 }
 
 function AddPoints() {
-
-    if (!studentID) return;
+    
+    if (!studentID || pointsAdded) return;
 
     let Option;
     let PointsToAdd = $('#AddPointsInput').val();
@@ -242,5 +247,6 @@ function AddPoints() {
         clearData();
         $("#iframeForm").hide();
     }, 4000);
+    pointsAdded = true;
 
 }
