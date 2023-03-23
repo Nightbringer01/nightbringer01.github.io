@@ -203,7 +203,8 @@ function RecordAttendance() {
     setTimeout(() => {
         clearData();
         $("#iframeForm").hide();
-    }, 4000);
+        $("#iframeForm").attr("src", "");
+    }, 5000);
     pointsAdded = true;
 }
 
